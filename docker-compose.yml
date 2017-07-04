@@ -5,23 +5,11 @@ services:
     build: .
     image: shintech/bb_mysql_seed:latest
     container_name: bb_mysql_seed
+    network_mode: bridge
     env_file:
-      - ./mysql.env
-    links: 
+      - ./bb_mysql_seed.env
+    external_links:
       - mysql
     ports:
       - 8000:8000
     restart: always
-  mysql:
-    image: mysql
-    container_name: mysql
-    command: mysqld --user=root --verbose
-    volumes:
-      - ./init.sql:/init.sql
-      - ./import.sh:/import.sh
-    environment:
-      MYSQL_DATABASE: "development"
-      MYSQL_USER: "mike"
-      MYSQL_PASSWORD: "password"
-      MYSQL_ROOT_PASSWORD: "password"
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
